@@ -16,8 +16,8 @@ class TaskController extends Controller
         //select * from tasks;
         $tasks = Task::all();
         //select * from tasks order by title;
-        $tasks = Task::orderby('title')->get();
-        return $tasks; 
+        //$tasks = Task::orderby('title')->get();
+        return view('task.index', ['tasks' => $tasks]); 
     }
 
     /**
@@ -25,7 +25,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return view('task.create');
     }
 
     /**
@@ -33,7 +33,7 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request;
     }
 
     /**
@@ -42,7 +42,8 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         // select * from tasks where id = ?
-        return $task;
+        // return $task;
+        return view('task.show', ['task' => $task]);
     }
 
     /**
