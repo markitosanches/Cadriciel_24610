@@ -52,6 +52,12 @@
         </nav>
     </header>
     <div class="container flex-grow-1">
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show mt-5" role="alert">
+                {{ session('success')}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>      
+        @endif
         @yield('content')
     </div>
     <footer class="footer mt-auto py-3 bg-dark text-white">

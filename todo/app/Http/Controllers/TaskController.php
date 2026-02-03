@@ -33,7 +33,23 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'completed' => 'nullable|boolean',
+            'due_date' => 'nullable|date',
+        ]);
+
+        //redirect()->back()->withErrors(['nom du champ 1'=> [regle de validation1, regle de validation2],'nom du champ 2'=> [regle de validation2, regle de validation2]])->inputs()
+        $task = Task::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'completed' => $request->input('completed', false),
+            'due_date' => $request->due_date,
+            'user_id' => 1
+        ]);
+
+        return redirect()->route('task.show', $task->id)->with('success', 'Task created successfully!');
     }
 
     /**
@@ -51,7 +67,7 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        return view('task.edit', ['task' => $task]);
     }
 
     /**
@@ -59,7 +75,20 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'completed' => 'nullable|boolean',
+            'due_date' => 'nullable|date',
+        ]);
+        $task->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'completed' => $request->input('completed', false),
+            'due_date' => $request->due_date,
+        ]);
+
+       return redirect()->route('task.show', $task->id)->with('success', 'Task updated successfully!');
     }
 
     /**
@@ -67,6 +96,7 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+        return redirect()->route('task.index')->withSuccess('Task deleted successfully!');
     }
 }
