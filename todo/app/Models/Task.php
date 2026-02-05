@@ -9,6 +9,9 @@ class Task extends Model
 {
     use HasFactory;
 
+    // protected $table = "my_task";
+    // protected $primaryKey = "task_id";
+
     protected $fillable = [
         'title',
         'description',
@@ -16,4 +19,8 @@ class Task extends Model
         'due_date',
         'user_id',
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
