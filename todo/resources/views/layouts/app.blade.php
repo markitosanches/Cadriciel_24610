@@ -22,7 +22,10 @@
                             <a class="nav-link active" aria-current="page" href="{{route('task.index')}}">Tasks</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">User</a>
+                            <a class="nav-link" href="{{route('user.index')}}">Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('user.create')}}">Registration</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"

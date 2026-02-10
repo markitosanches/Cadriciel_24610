@@ -181,7 +181,5 @@ class TaskController extends Controller
         ->get();
         
         return $tasks;
-
-        
     }
 }
