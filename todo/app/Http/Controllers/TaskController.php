@@ -6,6 +6,7 @@ use App\Models\Task;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -26,7 +27,10 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('task.create');
+       // if(Auth::check()){
+            return view('task.create');
+        // }
+        // return redirect(route('login'));
     }
 
     /**
@@ -47,7 +51,7 @@ class TaskController extends Controller
             'description' => $request->description,
             'completed' => $request->input('completed', false),
             'due_date' => $request->due_date,
-            'user_id' => 1
+            'user_id' => Auth::user()->id
         ]);
 
         return redirect()->route('task.show', $task->id)->with('success', 'Task created successfully!');

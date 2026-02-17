@@ -21,9 +21,11 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{route('task.index')}}">Tasks</a>
                         </li>
+                        @auth
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('user.index')}}">Users</a>
                         </li>
+                        @endauth
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('user.create')}}">Registration</a>
                         </li>
@@ -31,7 +33,9 @@
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
                                 aria-expanded="false">Tasks</a>
                             <ul class="dropdown-menu">
+                                @auth
                                 <li><a class="dropdown-item" href="{{route('task.create')}}">New Task</a></li>
+                                @endauth
                                 <li><a class="dropdown-item" href="{{route('task.completed', 1)}}">Completed</a></li>
                                 <li><a class="dropdown-item" href="{{route('task.completed', 0)}}">Unfinished</a></li>
                             </ul>
@@ -47,14 +51,25 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Logout</a>
+                            @guest
+                            <a class="nav-link" href="{{route('login')}}">Login</a>
+                            @else
+                            <a class="nav-link" href="{{route('logout')}}">Logout</a>
+                            @endguest
+
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container flex-grow-1">
+    <div class="container flex-grow-1 my-5">
+        @auth
+            <p>Welcome {{Auth::user()->name}}!</p>
+        @else
+            <p>Please log in to continue...</p>
+        @endauth
+
         @if(session('success'))
             <div class="alert alert-success alert-dismissible fade show mt-5" role="alert">
                 {{ session('success')}}
