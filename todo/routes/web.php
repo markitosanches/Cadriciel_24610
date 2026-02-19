@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SetLocaleController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -34,11 +35,15 @@ Route::middleware('auth')->group(function() {
 });
 
 Route::get('/completed/task/{completed}', [TaskController::class, 'completed'])->name('task.completed');
-
+//users
 Route::get('/users', [UserController::class, 'index'])->name('user.index')->middleware('auth');
 Route::get('/registration', [UserController::class, 'create'])->name('user.create');
 Route::post('/registration', [UserController::class, 'store'])->name('user.store');
 
+//auth
 Route::get('/login', [AuthController::class, 'create'])->name('login');
 Route::post('/login', [AuthController::class, 'store'])->name('auth.store');
 Route::get('/logout', [AuthController::class, 'destroy'])->name('logout');
+
+//lang
+Route::get('/lang/{locale}', [SetLocaleController::class, 'index'])->name('lang');

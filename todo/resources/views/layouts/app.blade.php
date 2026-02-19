@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body class="d-flex flex-column min-vh-100">
+    @php $locale = session()->get('locale') @endphp
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark" aria-label="Third navbar example">
             <div class="container-fluid">
@@ -44,10 +45,10 @@
                     <ul class="navbar-nav  mb-2 mb-sm-0">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                                aria-expanded="false">Language</a>
+                                aria-expanded="false">Language {{ $locale == '' ? "(en)" : "($locale)"}}</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">English</a></li>
-                                <li><a class="dropdown-item" href="#">French</a></li>
+                                <li><a class="dropdown-item" href="{{route('lang', 'en')}}">English</a></li>
+                                <li><a class="dropdown-item" href="{{route('lang', 'fr')}}">French</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -65,9 +66,9 @@
     </header>
     <div class="container flex-grow-1 my-5">
         @auth
-            <p>Welcome {{Auth::user()->name}}!</p>
+            <p>@lang('lang.text_welcome') {{Auth::user()->name}}!</p>
         @else
-            <p>Please log in to continue...</p>
+            <p>@lang('lang.text_login_msg')</p>
         @endauth
 
         @if(session('success'))
@@ -80,7 +81,7 @@
     </div>
     <footer class="footer mt-auto py-3 bg-dark text-white">
         <div class="container text-center">
-            &copy; {{ date('Y') }} {{ config('app.name') }}. All Rights Reserved.
+            &copy; {{ date('Y') }} {{ config('app.name') }}. @lang('lang.text_copryright')
 <br>Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
         </div>
     </footer>
