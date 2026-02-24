@@ -20,42 +20,42 @@
                 <div class="collapse navbar-collapse" id="navbarsExample03">
                     <ul class="navbar-nav me-auto mb-2 mb-sm-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{route('task.index')}}">Tasks</a>
+                            <a class="nav-link active" aria-current="page" href="{{route('task.index')}}">@lang('Tasks')</a>
                         </li>
                         @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('user.index')}}">Users</a>
+                            <a class="nav-link" href="{{route('user.index')}}">@lang('Users')</a>
                         </li>
                         @endauth
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('user.create')}}">Registration</a>
+                            <a class="nav-link" href="{{route('user.create')}}">@lang('Registration')</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                                aria-expanded="false">Tasks</a>
+                                aria-expanded="false">@lang('Tasks')</a>
                             <ul class="dropdown-menu">
                                 @auth
-                                <li><a class="dropdown-item" href="{{route('task.create')}}">New Task</a></li>
+                                <li><a class="dropdown-item" href="{{route('task.create')}}">@lang('New Task')</a></li>
                                 @endauth
-                                <li><a class="dropdown-item" href="{{route('task.completed', 1)}}">Completed</a></li>
-                                <li><a class="dropdown-item" href="{{route('task.completed', 0)}}">Unfinished</a></li>
+                                <li><a class="dropdown-item" href="{{route('task.completed', 1)}}">@lang('Completed')</a></li>
+                                <li><a class="dropdown-item" href="{{route('task.completed', 0)}}">@lang('Unfinished')</a></li>
                             </ul>
                         </li>
                     </ul>
                     <ul class="navbar-nav  mb-2 mb-sm-0">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                                aria-expanded="false">Language {{ $locale == '' ? "(en)" : "($locale)"}}</a>
+                                aria-expanded="false">@lang('Language') {{ $locale == '' ? "(en)" : "($locale)"}}</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{route('lang', 'en')}}">English</a></li>
-                                <li><a class="dropdown-item" href="{{route('lang', 'fr')}}">French</a></li>
+                                <li><a class="dropdown-item" href="{{route('lang', 'en')}}">@lang('English')</a></li>
+                                <li><a class="dropdown-item" href="{{route('lang', 'fr')}}">@lang('French')</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
                             @guest
-                            <a class="nav-link" href="{{route('login')}}">Login</a>
+                            <a class="nav-link" href="{{route('login')}}">@lang('Login')</a>
                             @else
-                            <a class="nav-link" href="{{route('logout')}}">Logout</a>
+                            <a class="nav-link" href="{{route('logout')}}">@lang('Logout')</a>
                             @endguest
 
                         </li>
