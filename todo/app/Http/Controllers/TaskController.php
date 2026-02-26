@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,9 @@ class TaskController extends Controller
     public function create()
     {
        // if(Auth::check()){
-            return view('task.create');
+            $categories = Category::categories();
+            // return view('task.create', ['categories'=>$categories]);
+            return view('task.create', compact('categories'));
         // }
         // return redirect(route('login'));
     }
@@ -43,7 +46,10 @@ class TaskController extends Controller
             'description' => 'required',
             'completed' => 'nullable|boolean',
             'due_date' => 'nullable|date',
-        ]);
+            'category_id' => 'required|exists:categories,id'
+        ],
+        ['category_id' => 'Custom message :attribute'],
+        ['category_id' => 'category']);
 
         //redirect()->back()->withErrors(['nom du champ 1'=> [regle de validation1, regle de validation2],'nom du champ 2'=> [regle de validation2, regle de validation2]])->inputs()
         $task = Task::create([
@@ -51,7 +57,8 @@ class TaskController extends Controller
             'description' => $request->description,
             'completed' => $request->input('completed', false),
             'due_date' => $request->due_date,
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()->id,
+            'category_id' => $request->category_id
         ]);
 
         return redirect()->route('task.show', $task->id)->with('success', 'Task created successfully!');

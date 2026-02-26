@@ -5,7 +5,7 @@ use App\Http\Controllers\SetLocaleController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +32,11 @@ Route::middleware('auth')->group(function() {
     Route::put('/edit/task/{task}', [TaskController::class, 'update'])->name('task.update');
     Route::delete('/task/{task}', [TaskController::class, 'destroy'])->name('task.destroy');
     Route::get('/query', [TaskController::class, 'query']);
+
+    // Route::get('/create/category', [CategoryController::class, 'create'])->name('category.create');
+    // Route::post('/create/category', [CategoryController::class, 'store'])->name('category.store');
+
+     Route::resource('/categories', CategoryController::class);
 });
 
 Route::get('/completed/task/{completed}', [TaskController::class, 'completed'])->name('task.completed');
