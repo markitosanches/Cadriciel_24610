@@ -45,6 +45,12 @@ Route::get('/users', [UserController::class, 'index'])->name('user.index')->midd
 Route::get('/registration', [UserController::class, 'create'])->name('user.create');
 Route::post('/registration', [UserController::class, 'store'])->name('user.store');
 
+//mot de passe oublié
+Route::get('/password/forgot', [UserController::class, 'forgot'])->name('user.forgot');
+Route::post('/password/forgot', [UserController::class, 'email'])->name('user.email');
+Route::get('/password/reset/{user}/{token}', [UserController::class, 'reset'])->name('user.reset');
+Route::put('/password/reset/{user}/{token}', [UserController::class, 'resetUpdate'])->name('user.reset.update');
+
 //auth
 Route::get('/login', [AuthController::class, 'create'])->name('login');
 Route::post('/login', [AuthController::class, 'store'])->name('auth.store');

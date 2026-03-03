@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Login')
+@section('title', 'Reset Password')
 @section('content')
     @if(!$errors->isEmpty())
     <div class="alert alert-danger mt-5 alert-dismissible fade show" role="alert"">
@@ -12,27 +12,27 @@
     </div>
     @endif
 
-    <h1 class="mt-5 mb-4">Login</h1>
+    <h1 class="mt-5 mb-4">Reset Password</h1>
     <div class="row justify-content-center mt-5 mb-5">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title">Login</h5>
+                    <h5 class="card-title">Reset Password</h5>
                 </div>
                 <div class="card-body">
                     <form method="post">
                         @csrf
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Username</label>
-                            <input type="email" class="form-control" id="email" name="email" value="{{old('email')}}">
-                        </div>
-                        <div class="mb-3">
+                        @method('put')
+                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" name="password">
                         </div>
-                        <button type="submit" class="btn btn-primary mb-3">Login</button>
+                        <div class="mb-3">
+                            <label for="password_confirmation" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Reset</button>
                     </form>
-                    <a href="{{route('user.forgot')}}">Forgot Password</a>
                 </div>
             </div>
         </div>

@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -75,5 +77,53 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function forgot(){
+        return view('user.forgot');
+    }
+
+    public function email(Request $request){
+       // return $request;
+       $request->validate([
+        'email' => 'required|email|exists:users'
+       ]);
+       $user = User::where('email', $request->email)->first();
+       $userId = $user->id;
+       $tempPassword = str::random(45);
+       $user->temp_password = $tempPassword;
+       $user->save();
+
+       $to_name = $user->name;
+       $to_email = $user->email;
+    
+       $body="<a href='".route('user.reset', [$userId, $tempPassword])."'>Click here to reset your password</a>";
+
+       Mail::send('user.mail', ['name'=>$to_name, 'body' => $body],
+        function($message) use ($to_email)
+        {
+            $message->to($to_email)->subject('Reset Password');
+        });
+        return redirect(route('login'))->withSuccess('Please check your email to reset your password!');  
+    }
+
+    public function reset(User $user, $token){
+        if ($user->temp_password === $token){
+            return view('user.reset');
+        }
+        return redirect(route('user.forgot'))->withErrors(trans('auth.failed'));
+    }
+
+    public function resetUpdate(User $user, $token, Request $request){
+        if ($user->temp_password === $token){
+            $request->validate([
+                'password' => 'required|min:6|max:20|confirmed'
+            ]);
+            $user->password = Hash::make($request->password);
+            $user->temp_password = NULL;
+            $user->save();
+            return redirect(route('login'))->withSuccess('Password changed with success');  
+        }
+        return redirect(route('user.forgot'))->withErrors(trans('auth.failed'));
     }
 }
