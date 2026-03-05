@@ -22,11 +22,13 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{route('task.index')}}">@lang('Tasks')</a>
                         </li>
-                        @auth
+                
+                        @can('view-users')
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('user.index')}}">@lang('Users')</a>
                         </li>
-                        @endauth
+                        @endcan
+                  
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('user.create')}}">@lang('Registration')</a>
                         </li>

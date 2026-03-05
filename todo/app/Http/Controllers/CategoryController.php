@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 // use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
@@ -23,9 +25,13 @@ class CategoryController extends Controller
 
         // $sorted = collect($categoriesR)->sortBy('category')->values();
         // return $sorted->all();
-        $categories = Category::categories();
-
-        return $categories;
+        if(Auth::user()->hasRole('Admin')){
+             $categories = Category::categories();
+            return $categories;
+        }else{
+            return 'Error';
+        }
+       
         
     }
 

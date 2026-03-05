@@ -24,13 +24,14 @@ Route::get('/', function () {
 
 Route::get('/tasks', [TaskController::class, 'index'])->name('task.index');
 Route::get('/task/{task}', [TaskController::class, 'show'])->name('task.show');
+Route::get('/task-pdf/{task}', [TaskController::class, 'pdf'])->name('task.pdf');
 
 Route::middleware('auth')->group(function() {
     Route::get('/create/task', [TaskController::class, 'create'])->name('task.create');
     Route::post('/create/task', [TaskController::class, 'store'])->name('task.store');
     Route::get('/edit/task/{task}', [TaskController::class, 'edit'])->name('task.edit');
     Route::put('/edit/task/{task}', [TaskController::class, 'update'])->name('task.update');
-    Route::delete('/task/{task}', [TaskController::class, 'destroy'])->name('task.destroy');
+    Route::delete('/task/{task}', [TaskController::class, 'destroy'])->name('task.destroy')->middleware('can:delete-task');
     Route::get('/query', [TaskController::class, 'query']);
 
     // Route::get('/create/category', [CategoryController::class, 'create'])->name('category.create');
@@ -41,7 +42,7 @@ Route::middleware('auth')->group(function() {
 
 Route::get('/completed/task/{completed}', [TaskController::class, 'completed'])->name('task.completed');
 //users
-Route::get('/users', [UserController::class, 'index'])->name('user.index')->middleware('auth');
+Route::get('/users', [UserController::class, 'index'])->name('user.index')->middleware('auth', 'can:view-users');
 Route::get('/registration', [UserController::class, 'create'])->name('user.create');
 Route::post('/registration', [UserController::class, 'store'])->name('user.store');
 
